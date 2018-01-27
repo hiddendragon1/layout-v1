@@ -45,14 +45,20 @@ class PostCard extends React.Component {
   constructor() {
    super();
    this.state = {
-     expanded: false,
+     expanded: true,
+     comments: false
    };
    this.handleExpandClick = this.handleExpandClick.bind(this);
+   this.handleCommentExpandClick = this.handleCommentExpandClick.bind(this);
    // this.handleAppClicks = this.handleAppClicks.bind(this);
   }
 
   handleExpandClick = () => {
     this.setState({ expanded: !this.state.expanded });
+  };
+
+  handleCommentExpandClick = () => {
+    this.setState({ comments: !this.state.comments });
   };
 
   render() {
@@ -64,13 +70,22 @@ class PostCard extends React.Component {
 	      <Avatar aria-label="Recipe" className={classes.avatar}>
             {this.props.name}
        	  </Avatar>}
-       	 action = {<IconButton className={classes.moreVert}>
-	            <MoreVertIcon />
-	          </IconButton>}
+       	 action = {<IconButton
+              className={classnames(classes.expand, {
+                [classes.expandOpen]: this.state.expanded,
+              })}
+              onClick={this.handleExpandClick}
+              aria-expanded={this.state.expanded}
+              aria-label="Show more"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+
+          }
          title={this.props.title}
          subheader={this.props.subheader}
 	    />
-	    
+	    <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
 	    <CardMedia
             className={classes.media}
             image={this.props.imgUrl}
@@ -89,19 +104,19 @@ class PostCard extends React.Component {
             <IconButton aria-label="Share">
               <ShareIcon />
               </IconButton>
+    
             <IconButton
               className={classnames(classes.expand, {
-                [classes.expandOpen]: this.state.expanded,
+                [classes.expandOpen]: this.state.comments,
               })}
-              onClick={this.handleExpandClick}
-              aria-expanded={this.state.expanded}
+              onClick={this.handleCommentExpandClick}
+              aria-expanded={this.state.comments}
               aria-label="Show more"
             >
               <ExpandMoreIcon />
             </IconButton>
-	           
-     	</CardActions>
-          <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+     	  </CardActions>
+          <Collapse in={this.state.comments} timeout="auto" unmountOnExit>
             <CardContent>
               <Typography paragraph type="body2">
                 Comment Box Here? 
@@ -110,6 +125,7 @@ class PostCard extends React.Component {
                  Some More Comments Components here.
               </Typography>
             </CardContent>
+            </Collapse>
           </Collapse>
 	   </Card>
 	  </div>
