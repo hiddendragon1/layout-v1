@@ -13,10 +13,7 @@ class App extends Component {
   render() {
     return (
         <MainSideBar>
-           <Reboot/>
-           <p className="App-intro">
-            To get started, edit <code>src/App.js</code> and save to reload.
-          </p>
+          <Reboot/>
           <PostCard 
              name="Kai"
              subheader="some description"

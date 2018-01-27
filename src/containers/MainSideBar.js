@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import Hidden from 'material-ui/Hidden';
-import Divider from 'material-ui/Divider';
+
 
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Fade from 'material-ui/transitions/Fade';
@@ -28,8 +28,6 @@ const styles = theme => ({
     width: '100%',
     height: '100%',
   },
-
-  drawerHeader: theme.mixins.toolbar,
   drawerPaper: {
     width: 240,
     [theme.breakpoints.up('md')]: {
