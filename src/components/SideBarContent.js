@@ -5,7 +5,6 @@ import { withStyles } from 'material-ui/styles';
 import Menu, { MenuItem, MenuList} from 'material-ui/Menu';
 
 const styles = theme => ({
-
   drawerHeader:  {
     backgroundColor: 'green',
     color: 'white',
@@ -15,8 +14,6 @@ const styles = theme => ({
       backgroundColor:'green',
     }
   }
-  
-
 });
 
 const SideBarContent = ({classes}) => (

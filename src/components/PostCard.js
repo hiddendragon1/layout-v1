@@ -8,9 +8,12 @@ import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import FavoriteIcon from 'material-ui-icons/Favorite';
+import Button from 'material-ui/Button';
 import ShareIcon from 'material-ui-icons/Share';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
+
+import CommentBox from './comments/CommentBox'
 
 const styles = theme => ({
   card: {
@@ -36,9 +39,10 @@ const styles = theme => ({
   avatar: {
     backgroundColor: "red",
   },
-  moreVert: {
+  comments: {
   	marginLeft: 'auto',
   }
+
 });
 
 class PostCard extends React.Component {
@@ -65,7 +69,7 @@ class PostCard extends React.Component {
   	const { classes } = this.props;
   	return (
 	  <div>
-	   <Card className={classes.card}>
+	   <Card className={classes.card} raised>
 	    <CardHeader avatar={
 	      <Avatar aria-label="Recipe" className={classes.avatar}>
             {this.props.name}
@@ -103,27 +107,26 @@ class PostCard extends React.Component {
             </IconButton>
             <IconButton aria-label="Share">
               <ShareIcon />
-              </IconButton>
-    
-            <IconButton
-              className={classnames(classes.expand, {
-                [classes.expandOpen]: this.state.comments,
-              })}
+            </IconButton>
+
+          <Button raised color="secondary" 
+              className={classnames(classes.expand)}
               onClick={this.handleCommentExpandClick}
               aria-expanded={this.state.comments}
-              aria-label="Show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton>
+              aria-label="Show Comments"
+          >
+           Comments
+           <ExpandMoreIcon className={classnames(classes.expand, {
+                [classes.expandOpen]: this.state.comments,
+              })}/>
+          </Button>
+            
+       
      	  </CardActions>
+
           <Collapse in={this.state.comments} timeout="auto" unmountOnExit>
             <CardContent>
-              <Typography paragraph type="body2">
-                Comment Box Here? 
-              </Typography>
-              <Typography paragraph>
-                 Some More Comments Components here.
-              </Typography>
+              <CommentBox/>
             </CardContent>
             </Collapse>
           </Collapse>
