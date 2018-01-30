@@ -17,7 +17,7 @@ import CommentBox from './comments/CommentBox'
 
 const styles = theme => ({
   card: {
-    maxWidth: '80%',
+    maxWidth: '70%',
     margin: 25
   },
   media: {
@@ -120,8 +120,6 @@ class PostCard extends React.Component {
                 [classes.expandOpen]: this.state.comments,
               })}/>
           </Button>
-            
-       
      	  </CardActions>
 
           <Collapse in={this.state.comments} timeout="auto" unmountOnExit>

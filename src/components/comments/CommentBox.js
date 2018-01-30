@@ -4,18 +4,12 @@ import CommentList from './CommentList';
 import CommentForm from './CommentForm';
 import axios from 'axios';
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    maxWidth: 752,
-  },
-  demo: {
-    backgroundColor: theme.palette.background.paper,
-  },
-  title: {
-    margin: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 2}px`,
-  },
-});
+const styles = {
+  commentBox: {
+   
+  }
+};
+
 
 class CommentBox extends React.Component {
   constructor() {
@@ -63,15 +57,15 @@ class CommentBox extends React.Component {
   }
 
   render() {
+    const {classes} = this.props;
     return (
-      <div className="commentBox">
-        <h3 style={{margin:'0px'}}>Comments</h3>
-        <CommentList data={this.state.data}/>
-        <CommentForm onAddComment = {this.addComment}/>
+      <div className={classes.commentBox}>
+          <CommentForm onAddComment = {this.addComment}/>
+          <CommentList data={this.state.data}/>       
       </div>
     );
   }
 
 }
 
-export default withStyles(styles, {withTheme:true})(CommentBox);
+export default withStyles(styles)(CommentBox);
