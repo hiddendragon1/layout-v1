@@ -11,6 +11,7 @@ import Dialog, {
 import Slide from 'material-ui/transitions/Slide';
 import Stepper,  {StepLabel, Step, StepContent} from 'material-ui/Stepper';
 import Button from 'material-ui/Button';
+import ChipInput from 'material-ui-chip-input';
 
 
 const styles = theme => ({
@@ -46,7 +47,9 @@ class NewPost extends React.Component {
 	  	files: [],
 	  	filesPreview: '',
 	  	open:false,
-	  	activeStep: 0
+	  	activeStep: 0,
+	  	chips: ['foo','bar'],
+	  	chipDisabled: false
 
 	  };
 	  this.handleTextPost = this.handleText.bind(this);
@@ -59,7 +62,7 @@ class NewPost extends React.Component {
 	}
 
 	handleNext() {
-		if(this.state.activeStep < 3 )
+		if(this.state.activeStep < 2 )
 		    this.setState({
 		      activeStep: this.state.activeStep + 1,
 			});
@@ -94,6 +97,25 @@ class NewPost extends React.Component {
 		});
 	}
 
+	handleChange(chips) {
+		if(chips.length < 5) {
+			console.log("added", chips);
+			this.setState ({
+				chips: chips
+			})
+		}
+		else {
+			console.log("you have more than 5");
+			// this.setState ({
+			// 	chipDisabled: true
+			// })
+		}
+	}
+
+	checkChips(chip) {
+		return this.state.chips.length < 5;
+	}	
+
 	onDropFile(file) {
 		this.state.files.push(file);
 		console.log(file);
@@ -110,9 +132,9 @@ class NewPost extends React.Component {
 		const {classes} = this.props;
 		const { activeStep } = this.state;
 		const steps = this.getSteps();
+
 return (
- 
-   
+
  	<div>
 	 	<TextField 
 			label="What blazing today"
@@ -139,7 +161,8 @@ return (
 				</Stepper>
 			</DialogTitle>
  	  		<DialogContent className={classes.diaglogContent}>
- 	  		   {activeStep == 1 ?	
+ 	  		   {activeStep == 1?	
+				
 				<TextField 
 			    	fullWidth
 			    	label="What blazing today"
@@ -147,7 +170,8 @@ return (
 		    		value={this.state.text} 
 		    		onChange={this.handleTextPost}
 		    		className={classes.textField}
-			    /> : ''}
+			    /> 	: ''}
+			    
 
 			    {activeStep ==0 ?
 		    	 <Dropzone
@@ -161,6 +185,19 @@ return (
 						<p>Only *.jpeg and *.png and *.gif images will be accepted</p> 
 					</div>} 
 				 </Dropzone>: '' }
+
+				 {activeStep == 2? 
+				 <ChipInput
+					  defaultValue={this.state.chips}
+					  fullWidth
+					  newChipKeyCodes={[13,188,32]}
+					  // onRequestAdd={(chip) => this.handleRequestAdd(chip)}
+  					//   onRequestDelete={(deletedChip) => this.handleRequestDelete(deletedChip)}
+  					  // onBeforeRequestAdd={(chip) => this.checkChips(chip)}
+					  onChange={(chips) => this.handleChange(chips)}
+					  helperText="Add Categories above seperated by space or comma"
+					  disabled={this.state.chipDisabled}
+					/>: '' }
 	          	<DialogActions>
                 <Button
                   disabled={activeStep === 0}
