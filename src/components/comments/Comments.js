@@ -13,17 +13,16 @@ import Typography from 'material-ui/Typography';
 
 const styles = theme => ({
   root: {
-    backgroundColor:'green',
-    color: 'white',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     fontSize: '0.875rem',
     fontWeight: 400,
-    lineHeight: '1rem'
+    lineHeight: '1rem',
   },
   container: {
     borderRadius: 30,
     marginTop: 10,
-    color: 'white'
+    border: '1px white solid',
+    color:'white'
   },
   avatar: {
     margin: 10,
@@ -31,6 +30,7 @@ const styles = theme => ({
   bigAvatar: {
     width: 60,
     height: 60,
+ 
   },
   replyBtn: {
   	color: 'white',
@@ -50,8 +50,9 @@ class Comment extends React.Component  {
 	render() {
 	const {classes}  = this.props		
 		return ( 
-			<ListItem  component='div' 
-				className={classnames(classes.root,classes.container)}
+			<ListItem  
+			  component='div' 
+			  className={classnames(classes.root,classes.container)}
 			>
 				<ListItemAvatar>
 					<Avatar src='/static/Image.jpeg' className={classes.bigAvatar}/>
@@ -60,7 +61,7 @@ class Comment extends React.Component  {
 					primary={<span><h5>{this.props.author}</h5>  {this.rawMarkup()}</span>}
 					disableTypography
 				/>
-				<ListItemSecondaryAction 	>
+				<ListItemSecondaryAction>
 					<IconButton aria-label="Reply" color="inherit" className={classes.replyBtn}>
 						<ReplyIcon />
 					</IconButton>

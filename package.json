@@ -19,6 +19,7 @@
     "nodemon": "^1.14.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-dropzone": "^4.2.7",
     "react-scripts": "1.1.0",
     "react-sidebar": "^2.3.2",
     "remarkable": "^1.7.1",

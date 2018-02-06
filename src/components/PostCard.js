@@ -11,14 +11,17 @@ import FavoriteIcon from 'material-ui-icons/Favorite';
 import Button from 'material-ui/Button';
 import ShareIcon from 'material-ui-icons/Share';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import MoreVertIcon from 'material-ui-icons/MoreVert';
+// import MoreVertIcon from 'material-ui-icons/MoreVert';
 
 import CommentBox from './comments/CommentBox'
+import PostActions from './posts/PostActions'
+
 
 const styles = theme => ({
   card: {
     maxWidth: '70%',
-    margin: 25
+    margin: 25,
+    background: '#0a2a5a'
   },
   media: {
     height: 200,
@@ -37,10 +40,14 @@ const styles = theme => ({
     transform: 'rotate(180deg)',
   },
   avatar: {
-    backgroundColor: "red",
+    backgroundColor: "#3f51b5",
+    color: 'white'
   },
   comments: {
   	marginLeft: 'auto',
+  },
+  commentBox: {
+    background: '#656565',
   }
 
 });
@@ -68,11 +75,11 @@ class PostCard extends React.Component {
   render() {
   	const { classes } = this.props;
   	return (
-	  <div>
+	    
 	   <Card className={classes.card} raised>
 	    <CardHeader avatar={
-	      <Avatar aria-label="Recipe" className={classes.avatar}>
-            {this.props.name}
+  	      <Avatar aria-label="Recipe" className={classes.avatar}>
+              {this.props.name}
        	  </Avatar>}
        	 action = {<IconButton
               className={classnames(classes.expand, {
@@ -90,7 +97,7 @@ class PostCard extends React.Component {
          subheader={this.props.subheader}
 	    />
 	    <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-	    <CardMedia
+	      <CardMedia
             className={classes.media}
             image={this.props.imgUrl}
             title="Mountain Picture Somewhere"
@@ -101,35 +108,19 @@ class PostCard extends React.Component {
               your guests. Add 1 cup of frozen peas along with the mussels, if you like.
             </Typography>
         </CardContent>
-        <CardActions className={classes.actions} disableActionSpacing>
-            <IconButton aria-label="Add to favorites">
-              <FavoriteIcon />
-            </IconButton>
-            <IconButton aria-label="Share">
-              <ShareIcon />
-            </IconButton>
+        <PostActions 
+          expandCommentClick = {this.handleCommentExpandClick} 
+          commentState={this.state.comments} />
 
-          <Button raised color="secondary" 
-              className={classnames(classes.expand)}
-              onClick={this.handleCommentExpandClick}
-              aria-expanded={this.state.comments}
-              aria-label="Show Comments"
-          >
-           Comments
-           <ExpandMoreIcon className={classnames(classes.expand, {
-                [classes.expandOpen]: this.state.comments,
-              })}/>
-          </Button>
-     	  </CardActions>
-
-          <Collapse in={this.state.comments} timeout="auto" unmountOnExit>
-            <CardContent>
-              <CommentBox/>
-            </CardContent>
-            </Collapse>
-          </Collapse>
+        <Collapse in={this.state.comments} timeout="auto" unmountOnExit>
+          <CardContent className={classes.commentBox}>
+            <CommentBox/>
+          </CardContent>
+        </Collapse>
+      </Collapse>
 	   </Card>
-	  </div>
+	  
+
   	);
   }
 

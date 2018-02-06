@@ -12,6 +12,7 @@ const styles = theme => ({
     height: 'calc(100% - 65px)',
     '&:hover': {
       backgroundColor:'green',
+      cursor: 'default'
     }
   }
 });
