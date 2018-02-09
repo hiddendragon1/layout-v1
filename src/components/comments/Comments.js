@@ -3,12 +3,12 @@ import Remarkable from 'remarkable';
 import RemarkableReactRenderer from 'remarkable-react'
 import { withStyles } from 'material-ui/styles';
 import classnames from 'classnames';
-import Collapse from 'material-ui/transitions/Collapse';
+
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import ReplyIcon from 'material-ui-icons/Reply';
-import List, { ListItem, ListItemAvatar, ListItemIcon, ListItemSecondaryAction, ListItemText } from 'material-ui/List';
-import Typography from 'material-ui/Typography';
+import { ListItem, ListItemAvatar, ListItemIcon, ListItemSecondaryAction, ListItemText } from 'material-ui/List';
+// import Typography from 'material-ui/Typography';
 
 
 const styles = theme => ({

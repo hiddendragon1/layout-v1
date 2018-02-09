@@ -17,9 +17,7 @@ const styles = theme => ({
 });
 
 class CommentList extends React.Component {
-  constructor() {
-    super(); 
-  }
+
 
   render() {
   	var commentList = this.props.data.map(function(comment) {

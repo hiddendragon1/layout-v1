@@ -2,7 +2,7 @@ import React from 'react';
 import Divider from 'material-ui/Divider';
 import { withStyles } from 'material-ui/styles';
 
-import Menu, { MenuItem, MenuList} from 'material-ui/Menu';
+import { MenuItem } from 'material-ui/Menu';
 
 const styles = theme => ({
   drawerHeader:  {

@@ -48,9 +48,8 @@ class NewPost extends React.Component {
 	  	filesPreview: '',
 	  	open:false,
 	  	activeStep: 0,
-	  	chips: ['foo','bar'],
+	  	chips: [],
 	  	chipDisabled: false
-
 	  };
 	  this.handleTextPost = this.handleText.bind(this);
 	  this.onDropFile = this.onDropFile.bind(this);
@@ -66,8 +65,22 @@ class NewPost extends React.Component {
 		    this.setState({
 		      activeStep: this.state.activeStep + 1,
 			});
-		else
-			console.log("handle post here");
+		else {
+			this.props.onAddNewPost({
+		        author: "Holder",
+		        subheader: Date.now(),
+		        title: this.state.text ,
+		        imgUrl: this.state.filesPreview,
+			});
+			this.setState({	  	
+				text: '', 
+			  	filesPreview: '',
+			  	open:false,
+			  	activeStep: 0,
+			  	chips: [],
+			  	chipDisabled: false
+	  		});
+		}
 	};
 
 	handleBack() {
@@ -161,7 +174,7 @@ return (
 				</Stepper>
 			</DialogTitle>
  	  		<DialogContent className={classes.diaglogContent}>
- 	  		   {activeStep == 1?	
+ 	  		   {activeStep === 1?	
 				
 				<TextField 
 			    	fullWidth
@@ -173,7 +186,7 @@ return (
 			    /> 	: ''}
 			    
 
-			    {activeStep ==0 ?
+			    {activeStep ===0 ?
 		    	 <Dropzone
 		            accept="image/jpeg, image/png, image/gif"
 		            onDrop={this.onDropFile}
@@ -186,7 +199,7 @@ return (
 					</div>} 
 				 </Dropzone>: '' }
 
-				 {activeStep == 2? 
+				 {activeStep === 2? 
 				 <ChipInput
 					  defaultValue={this.state.chips}
 					  fullWidth
@@ -195,7 +208,7 @@ return (
   					//   onRequestDelete={(deletedChip) => this.handleRequestDelete(deletedChip)}
   					  // onBeforeRequestAdd={(chip) => this.checkChips(chip)}
 					  onChange={(chips) => this.handleChange(chips)}
-					  helperText="Add Categories above seperated by space or comma"
+					  label="Add categories seperated by space or comma"
 					  disabled={this.state.chipDisabled}
 					/>: '' }
 	          	<DialogActions>

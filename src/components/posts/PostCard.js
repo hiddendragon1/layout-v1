@@ -1,27 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import classnames from 'classnames';
-import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
+// import classnames from 'classnames';
+import Card, { CardMedia, CardContent } from 'material-ui/Card';
 import Collapse from 'material-ui/transitions/Collapse';
-import Avatar from 'material-ui/Avatar';
-import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
-import FavoriteIcon from 'material-ui-icons/Favorite';
-import Button from 'material-ui/Button';
-import ShareIcon from 'material-ui-icons/Share';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-// import MoreVertIcon from 'material-ui-icons/MoreVert';
 
-import CommentBox from './comments/CommentBox'
-import PostActions from './posts/PostActions'
-
+import CommentBox from '../comments/CommentBox';
+import PostActions from './PostActions';
+import PostCardHeader from './PostCardHeader';
 
 const styles = theme => ({
   card: {
     maxWidth: '70%',
     margin: 25,
-    background: '#0a2a5a'
+    background: '#0a2a5a',
+    [theme.breakpoints.down('sm')]: {
+      margin: '20px 0px',
+      maxWidth: '100%',
+    },
   },
   media: {
     height: 200,
@@ -73,29 +70,18 @@ class PostCard extends React.Component {
   };
 
   render() {
-  	const { classes } = this.props;
+  	const { classes,name,title, subheader } = this.props;
+
   	return (
 	    
 	   <Card className={classes.card} raised>
-	    <CardHeader avatar={
-  	      <Avatar aria-label="Recipe" className={classes.avatar}>
-              {this.props.name}
-       	  </Avatar>}
-       	 action = {<IconButton
-              className={classnames(classes.expand, {
-                [classes.expandOpen]: this.state.expanded,
-              })}
-              onClick={this.handleExpandClick}
-              aria-expanded={this.state.expanded}
-              aria-label="Show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton>
+	    <PostCardHeader
+        expandClick = {this.handleExpandClick} 
+        state={this.state.expanded}
+        name={name}
+        title={title}
+        subheader={subheader} />
 
-          }
-         title={this.props.title}
-         subheader={this.props.subheader}
-	    />
 	    <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
 	      <CardMedia
             className={classes.media}
@@ -103,15 +89,16 @@ class PostCard extends React.Component {
             title="Mountain Picture Somewhere"
         />
         <CardContent>
-            <Typography component="p">
-              This impressive paella is a perfect party dish and a fun meal to cook together with
-              your guests. Add 1 cup of frozen peas along with the mussels, if you like.
+            <Typography>
+              This impressive paella is a perfect party dish and a fun meal to 
+              cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like.
             </Typography>
-        </CardContent>
-        <PostActions 
-          expandCommentClick = {this.handleCommentExpandClick} 
-          commentState={this.state.comments} />
-
+             </CardContent>
+        
+          <PostActions 
+            expandClick = {this.handleCommentExpandClick} 
+            state={this.state.comments} />
+       
         <Collapse in={this.state.comments} timeout="auto" unmountOnExit>
           <CardContent className={classes.commentBox}>
             <CommentBox/>
