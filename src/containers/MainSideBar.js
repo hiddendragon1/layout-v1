@@ -12,7 +12,7 @@ import SideBarContent from '../components/SideBarContent'
 import ToolBar from '../components/ToolBar'
 import '../components/mainsidebar.css'
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const styles = theme => ({
   root: {
@@ -29,7 +29,7 @@ const styles = theme => ({
     height: '100%',
   },
   drawerPaper: {
-    width: 240,
+    width: 200,
     [theme.breakpoints.up('md')]: {
       width: drawerWidth,
       position: 'fixed',

@@ -13,7 +13,7 @@ import PostCardHeader from './PostCardHeader';
 const styles = theme => ({
   card: {
     maxWidth: '70%',
-    margin: 25,
+    margin: 15,
     background: '#0a2a5a',
     [theme.breakpoints.down('sm')]: {
       margin: '20px 0px',
@@ -21,7 +21,8 @@ const styles = theme => ({
     },
   },
   media: {
-    height: 200,
+    maxHeight: 250,
+    height: '100%'
   },
   actions: {
     display: 'flex',

@@ -9,7 +9,7 @@ import MenuIcon from 'material-ui-icons/Menu';
 import AppsIcon from 'material-ui-icons/Apps';
 
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const styles = theme => ({
   appBar: {
