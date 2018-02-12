@@ -11,6 +11,7 @@ import Dialog, {
 import Slide from 'material-ui/transitions/Slide';
 import Stepper,  {StepLabel, Step, StepContent} from 'material-ui/Stepper';
 import Button from 'material-ui/Button';
+import PhotoIcon from 'material-ui-icons/Photo';
 import ChipInput from 'material-ui-chip-input';
 
 
@@ -194,6 +195,7 @@ return (
 		            className={classes.dropZone}>
 	          	 {this.state.filesPreview ? <img src={this.state.filesPreview} height="50%" width="100%"/> :
 	          	 	<div>
+	          	 		<PhotoIcon style={{width:100,height:100,margin:'0 auto'}}/>
 						<p>Drag and Drop files here or click to select files to upload.</p>
 						<p>Only *.jpeg and *.png and *.gif images will be accepted</p> 
 					</div>} 
