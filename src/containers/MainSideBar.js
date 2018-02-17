@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import Hidden from 'material-ui/Hidden';
@@ -10,6 +11,7 @@ import Fade from 'material-ui/transitions/Fade';
 
 import SideBarContent from '../components/SideBarContent'
 import ToolBar from '../components/ToolBar'
+import Auth from '../modules/Auth'
 import '../components/mainsidebar.css'
 
 const drawerWidth = 200;
@@ -37,7 +39,7 @@ const styles = theme => ({
     },
   },
   content: {
-    backgroundColor: theme.palette.background.default,
+    // backgroundColor: theme.palette.background.default,
     width: '100%',
     padding: theme.spacing.unit * 3,
     height: 'calc(100% - 56px)',
@@ -92,10 +94,25 @@ class MainSideBar extends React.Component {
             onClose={this.handleAppClose}
             transition={Fade}
           >
-            <MenuItem onClick={this.handleAppClose}>Profile</MenuItem>
-            <MenuItem onClick={this.handleAppClose}>My account</MenuItem>
-            <MenuItem onClick={this.handleAppClose}>Logout</MenuItem>
+            <MenuItem onClick={this.handleAppClose}><Link to={'/'}>Home</Link></MenuItem>
+            
+          
+          {Auth.isUserAuthenticated() ? 
+            <MenuItem onClick={this.handleAppClose}><Link to="/" 
+              onClick={ function() {
+                Auth.deauthenticateUser();
+              }}>
+              Log out 
+            </Link></MenuItem> : 
+           <div>
+            <MenuItem onClick={this.handleAppClose}><Link to={'/login'}>Log in</Link></MenuItem>
+            <MenuItem onClick={this.handleAppClose}><Link to={'/signup'}>Sign Up</Link></MenuItem>
+          </div>
+          }
+
+
           </Menu>
+
           <ToolBar 
           	onClick={this.handleDrawerToggle}
           	appOnClick = {this.handleAppClicks}

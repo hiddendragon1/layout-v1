@@ -30,10 +30,11 @@ class CommentBox extends React.Component {
   }
 
   fetchCommentList() {
-    console.log("fetchCommentList");
+    
     axios.get(this.url)
      .then(response => {
         this.setState({data: response.data});
+        console.log("fetchCommentList");
      })
      .catch(function(error){
         console.log(error);

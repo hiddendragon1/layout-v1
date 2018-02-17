@@ -52,8 +52,9 @@ class NewPost extends React.Component {
 	  	chips: [],
 	  	chipDisabled: false
 	  };
+	  this.errors={};
 	  this.handleTextPost = this.handleText.bind(this);
-	  this.onDropFile = this.onDropFile.bind(this);
+	  // this.onDropFile = this.onDropFile.bind(this);
 	  this.handleClose = this.handleClose.bind(this);
 	  this.handleOpen = this.handleOpen.bind(this);
 	  this.handleBack = this.handleBack.bind(this);
@@ -67,20 +68,32 @@ class NewPost extends React.Component {
 		      activeStep: this.state.activeStep + 1,
 			});
 		else {
-			this.props.onAddNewPost({
-		        author: "Holder",
-		        subheader: Date.now(),
-		        title: this.state.text ,
-		        imgUrl: this.state.filesPreview,
-			});
-			this.setState({	  	
-				text: '', 
-			  	filesPreview: '',
-			  	open:false,
-			  	activeStep: 0,
-			  	chips: [],
-			  	chipDisabled: false
-	  		});
+			if(this.state.text){
+				this.props.onAddNewPost({
+			        author: "Holder",
+			        subheader: Date.now(),
+			        title: this.state.text ,
+			        imgUrl: this.state.filesPreview,
+		 			file: this.state.files
+				});
+
+				this.setState({	  	
+					text: '', 
+				  	filesPreview: '',
+				  	open:false,
+				  	activeStep: 0,
+				  	chips: [],
+				  	chipDisabled: false
+		  		});
+			}
+			else {
+				this.errors.title = "Please enter a title"
+				this.setState({	  	
+					
+				  	activeStep: 1,
+
+		  		});
+			}
 		}
 	};
 
@@ -130,11 +143,12 @@ class NewPost extends React.Component {
 		return this.state.chips.length < 5;
 	}	
 
-	onDropFile(file) {
-		this.state.files.push(file);
-		console.log(file);
+	onDrop = (files) => {
+		// this.state.files.push(file);
+		console.log(files[0]);
 		this.setState ({
-			filesPreview : file[0].preview		
+			filesPreview : files[0].preview,
+			files:files[0]
 		});
 	}
 
@@ -160,6 +174,7 @@ return (
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
+          transition={Slide}
 
         >
 			<DialogTitle id="form-dialog-title" className={classes.dialogTitle}>
@@ -179,8 +194,10 @@ return (
 				
 				<TextField 
 			    	fullWidth
+			    	required
 			    	label="What blazing today"
-			    	placeholder="What are you on  today" 
+			    	error={this.errors.title?true:false}
+          			helperText={this.errors.title}
 		    		value={this.state.text} 
 		    		onChange={this.handleTextPost}
 		    		className={classes.textField}
@@ -190,7 +207,7 @@ return (
 			    {activeStep ===0 ?
 		    	 <Dropzone
 		            accept="image/jpeg, image/png, image/gif"
-		            onDrop={this.onDropFile}
+		            onDrop={this.onDrop}
 		            name="upload"
 		            className={classes.dropZone}>
 	          	 {this.state.filesPreview ? <img src={this.state.filesPreview} height="50%" width="100%"/> :
@@ -207,7 +224,7 @@ return (
 					  fullWidth
 					  newChipKeyCodes={[13,188,32]}
 					  // onRequestAdd={(chip) => this.handleRequestAdd(chip)}
-  					//   onRequestDelete={(deletedChip) => this.handleRequestDelete(deletedChip)}
+  					  // onRequestDelete={(deletedChip) => this.handleRequestDelete(deletedChip)}
   					  // onBeforeRequestAdd={(chip) => this.checkChips(chip)}
 					  onChange={(chips) => this.handleChange(chips)}
 					  label="Add categories seperated by space or comma"

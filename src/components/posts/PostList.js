@@ -8,24 +8,17 @@ import PostCard from './PostCard';
 
 
 class PostList extends React.Component {
-   constructor() {
-   super();
-   this.state = {
-     expanded: true,
-     comments: false
-   };
-  }
-
-
   render() {
   	var postList = this.props.data.map(function(post) {
+  		console.log("in postlist",post._id);
+
   		return (
 			<PostCard 
-				name={post.author}
-				subheader={post.subheader}
+				name={post.author.name}
+				subheader={post.createdAt}
 				title={post.title}
 				imgUrl={post.imgUrl}
-				key={post.id} 
+				key={post._id} 
 			/>
 		);
   	});
