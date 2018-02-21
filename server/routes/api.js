@@ -16,7 +16,6 @@ router.get('/dashboard', (req, res) => {
 router.get('/posts', (req, res) => {
   Post.find().sort({ createdAt: -1 }).populate('author','name')
     .then((Posts) => {
-      console.log(Posts);
       res.send({ Posts });
     })
     .catch((error) => {
@@ -26,20 +25,18 @@ router.get('/posts', (req, res) => {
 
 /*Post post API call to add new post*/
 router.post('/post', upload.single('file'), (req, res) => {
-  // const post = new Post(req.body);
+  const post = new Post(req.body);
+  const path = req.file.path.replace(/\\/g, "/");
+  post.imgUrl = path.substring(path.indexOf('static')-1);
 
-  console.log(req.file);
-  console.log(post);
-
-
-  // post.save()
-  //   .then((doc) => {
-  //     console.log(doc);
-  //     res.send(doc);
-  //   })
-  //   .catch((error) => {
-  //     res.status(400).send({ error });
-  //   });
+  post.save()
+    .then((doc) => {
+      console.log(doc);
+      res.send(doc);
+    })
+    .catch((error) => {
+      res.status(400).send({ error });  
+    });
 });
 
 /* Post delete API call to mongoDB*/

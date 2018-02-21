@@ -5,67 +5,66 @@ import CommentForm from './CommentForm';
 import axios from 'axios';
 
 const styles = {
-  commentBox: {
-   
-  }
+   commentBox: {
+
+   }
 };
 
 
 class CommentBox extends React.Component {
-  constructor() {
-    super();
-    this.state ={
-      data: [
-      {id: 1, author: "Pete Hunt", text: "This is one comment"},
-      {id: 2, author: "Jordan Walke", text: "This is **another** comment"}
-      ]
+   constructor() {
+      super();
+      this.state = {
+         data: [
+            { id: 1, author: "Pete Hunt", text: "This is one comment" },
+            { id: 2, author: "Jordan Walke", text: "This is **another** comment" }
+         ]
+      }
+      this.addComment = this.addComment.bind(this);
+      this.url = '/comments.json';
    }
-   this.addComment =  this.addComment.bind(this);
-   this.url = '/comments.json';
-  }
 
-  componentDidMount() {
-    this.fetchCommentList();
-    // setInterval(this.fetchCommentList, 2000);
-  }
+   componentDidMount() {
+      this.fetchCommentList();
+      // setInterval(this.fetchCommentList, 2000);
+   }
 
-  fetchCommentList() {
-    
-    axios.get(this.url)
-     .then(response => {
-        this.setState({data: response.data});
-        console.log("fetchCommentList");
-     })
-     .catch(function(error){
-        console.log(error);
-     });
-  }
+   fetchCommentList() {
+      axios.get(this.url)
+         .then(response => {
+            this.setState({ data: response.data });
+            console.log("fetchCommentList");
+         })
+         .catch(function(error) {
+            console.log(error);
+         });
+   }
 
-  addComment(comment) {
-     comment.id = Date.now();
-     this.state.data.push(comment);
+   addComment(comment) {
+      comment.id = Date.now();
+      this.state.data.push(comment);
 
-     this.setState({
-        data: this.state.data
-     })
-     axios.post(this.url,comment)
-     .then(response => {
-        this.setState({data: response.data});
-     })
-     .catch(function(error){
-        console.log(error);
-     });
-  }
+      this.setState({
+         data: this.state.data
+      })
+      axios.post(this.url, comment)
+         .then(response => {
+            this.setState({ data: response.data });
+         })
+         .catch(function(error) {
+            console.log(error);
+         });
+   }
 
-  render() {
-    const {classes} = this.props;
-    return (
-      <div className={classes.commentBox}>
-          <CommentForm onAddComment = {this.addComment}/>
-          <CommentList data={this.state.data}/>       
-      </div>
-    );
-  }
+   render() {
+      const { classes } = this.props;
+      return ( 
+        <div className = { classes.commentBox }>
+          <CommentForm onAddComment = { this.addComment }/> 
+          <CommentList data = { this.state.data }/>
+        </div>
+      );
+   }
 
 }
 

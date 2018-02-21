@@ -46,6 +46,12 @@ class HomePage extends Component {
 
   //fetch the Posts default by hot for Hompage
   componentWillMount() {
+
+    //set user name
+    this.author = {
+      name: Auth.getUserName()
+    }
+    //get posts for display
     axios.get('/api/posts', {
       headers: { 
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -69,6 +75,7 @@ class HomePage extends Component {
     })
     .catch( error => {
 
+      console.log(error);
       // change the component state
       const errors = error.response ? error.response : {};
       errors.summary = error.message;
@@ -88,15 +95,15 @@ class HomePage extends Component {
    */
   addNewPost(post) {
 
-    const title = encodeURIComponent(post.title);
-    const imgUrl = encodeURIComponent(post.imgUrl);
-    const file = post.file;
+    // const title = encodeURIComponent(post.title);
+    // const imgUrl = encodeURIComponent(post.imgUrl);
+    // const file = post.file;
 
     const formData = new FormData();
     formData.append("author", Auth.getUserId());
-    formData.append("title", title);
-    formData.append("imgUrl", imgUrl);
-    formData.append("file", file);
+    formData.append("title", post.title);
+    // formData.append("imgUrl", imgUrl);
+    formData.append("file", post.file);
     
     // const formData = `author=${Auth.getUserId()}&title=${title}&imgUrl=${imgUrl}&file=${file}`;
 
@@ -113,7 +120,8 @@ class HomePage extends Component {
         this.setState({
           errors: {}
         });
-
+        //set proper author name for display
+        response.data.author = this.author;
         this.state.data.push(response.data);
         console.log(this.state.data);
         this.setState({
@@ -123,8 +131,9 @@ class HomePage extends Component {
     })
     .catch( error => {
       // change the component state
-      const errors = error.response.data.errors ? error.response.data.errors : {};
-      errors.summary = error.response.data.message;
+      console.log(error);
+      const errors = error.response? error.response : {};
+      errors.summary = error.message;
 
       this.setState({
         errors

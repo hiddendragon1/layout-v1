@@ -10,8 +10,6 @@ import PostCard from './PostCard';
 class PostList extends React.Component {
   render() {
   	var postList = this.props.data.map(function(post) {
-  		console.log("in postlist",post._id);
-
   		return (
 			<PostCard 
 				name={post.author.name}
