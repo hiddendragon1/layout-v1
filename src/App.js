@@ -8,7 +8,6 @@ import LoginPage from './containers/LoginPage';
 import SignupPage from './containers/SignUpPage';
 import ProfilePage from './containers/ProfilePage';
 
-//ok finnally?
 const theme = createMuiTheme({
   palette: {
     type: 'dark', // Switching the dark mode on is a single property value change.
