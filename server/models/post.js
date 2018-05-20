@@ -16,6 +16,14 @@ const PostSchema = new mongoose.Schema({
   likes: [{ 
     type: Schema.ObjectId,
     ref: 'User'
+  }],
+  comments: [{
+    type: Schema.ObjectId,
+    ref: 'Comment'
+  }],
+  classifications: [{
+    type: String,
+    ref: 'Classification'
   }]
 },{timestamps: true});
 

@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import Divider from 'material-ui/Divider';
 import { withStyles } from 'material-ui/styles';
-
 import { MenuItem } from 'material-ui/Menu';
 
 const styles = theme => ({
@@ -19,12 +20,10 @@ const styles = theme => ({
 
 const SideBarContent = ({classes}) => (
   <div>
-  <MenuItem classes={{
-                root: classes.drawerHeader,
-              }}>Menu</ MenuItem>
+    <MenuItem classes={{ root: classes.drawerHeader }}>Menu </MenuItem>
 
-    <MenuItem >Home</MenuItem >
-    <MenuItem >Responsive Example</MenuItem >
+    <MenuItem ><Link to={'/'}>Home</Link> </MenuItem>
+    <MenuItem >Responsive Example</MenuItem>
     <Divider/>
     <MenuItem >Mock menu item 1</MenuItem>
 		<MenuItem >Mock menu item 2</MenuItem>

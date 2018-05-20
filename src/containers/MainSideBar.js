@@ -96,14 +96,15 @@ class MainSideBar extends React.Component {
           >
             <MenuItem onClick={this.handleAppClose}><Link to={'/'}>Home</Link></MenuItem>
             
-          
           {Auth.isUserAuthenticated() ? 
-            <MenuItem onClick={this.handleAppClose}><Link to="/" 
-              onClick={ function() {
-                Auth.deauthenticateUser();
-              }}>
-              Log out 
-            </Link></MenuItem> : 
+            <div>
+              <MenuItem onClick={this.handleAppClose}><Link to={'/profile'}>Profile</Link></MenuItem>
+              <MenuItem onClick={this.handleAppClose}>
+                <Link to="/"  onClick={ function() { Auth.deauthenticateUser(); }}>
+                  Log out 
+                </Link>
+              </MenuItem>
+            </div> : 
            <div>
             <MenuItem onClick={this.handleAppClose}><Link to={'/login'}>Log in</Link></MenuItem>
             <MenuItem onClick={this.handleAppClose}><Link to={'/signup'}>Sign Up</Link></MenuItem>
@@ -119,7 +120,7 @@ class MainSideBar extends React.Component {
           />
           <Hidden mdUp>
             <Drawer
-              type="temporary"
+              variant="temporary"
               // anchor={theme.direction === 'rtl' ? 'right' : 'left'}
               open={this.state.mobileOpen}
               classes={{
@@ -135,7 +136,7 @@ class MainSideBar extends React.Component {
           </Hidden>
           <Hidden smDown implementation="css">
             <Drawer
-              type="permanent"
+              variant="permanent"
               open
               classes={{
                 paper: classes.drawerPaper,

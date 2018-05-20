@@ -70,21 +70,21 @@ class NewPost extends React.Component {
 		else {
 			if(this.state.text){
 				this.props.onAddNewPost({
-			        author: "Holder",
-			        subheader: Date.now(),
-			        title: this.state.text ,
-			        imgUrl: this.state.filesPreview,
-		 			file: this.state.files
+	        author: "Holder",
+	        subheader: Date.now(),
+	        title: this.state.text ,
+	        imgUrl: this.state.filesPreview,
+ 					file: this.state.files
 				});
 
 				this.setState({	  	
 					text: '', 
-				  	filesPreview: '',
-				  	open:false,
-				  	activeStep: 0,
-				  	chips: [],
-				  	chipDisabled: false
-		  		});
+			  	filesPreview: '',
+			  	open:false,
+			  	activeStep: 0,
+			  	chips: [],
+			  	chipDisabled: false
+	  		});
 			}
 			else {
 				this.errors.title = "Please enter a title"
@@ -237,7 +237,7 @@ return (
                 	Back
                 </Button>
                 <Button 
-                  raised 
+                  variant="raised"
                   color="primary" 
                   onClick={this.handleNext}>
                   {activeStep === steps.length - 1 ? 'Post' : 'Next'}

@@ -11,6 +11,9 @@ import PostActions from './PostActions';
 import PostCardHeader from './PostCardHeader';
 import Icon from 'material-ui/Icon';
 
+import Auth from '../../modules/Auth';
+import axios from 'axios'
+
 const styles = theme => ({
   card: {
     maxWidth: '70%',
@@ -23,6 +26,7 @@ const styles = theme => ({
   },
   media: {
     height: 250,
+    
   },
   actions: {
     display: 'flex',
@@ -51,7 +55,7 @@ const styles = theme => ({
 });
 
 class PostCard extends React.Component {
-  constructor() {
+  constructor () {
    super();
    this.state = {
      expanded: true,
@@ -59,31 +63,54 @@ class PostCard extends React.Component {
      numComments: 5,
      numLikes: 128
    };
-   // this.handleExpandClick = this.handleExpandClick.bind(this);
-   // this.handleCommentExpandClick = this.handleCommentExpandClick.bind(this);
-   // this.handleThumbsClick = this.handleThumbsClick.bind(this);
-   // this.handleAppClicks = this.handleAppClicks.bind(this);
   }
 
-  componentDidMonunt() {
-
+  componentWillMount = () => {
+    this.state.numComments = this.props.numComments;
+    this.state.numLikes = this.props.numLikes;
   }
 
   handleExpandClick = () => {
     this.setState({ expanded: !this.state.expanded });
-  };
+  }
 
   handleCommentExpandClick = () => {
     this.setState({ comments: !this.state.comments });
-  };
+  }
 
-  handleThumbsClick = (change) =>{
-    const newLikes = this.state.numLikes + change;
-    this.setState({numLikes: newLikes});
+  handleThumbsClick = (change) => {
+
+    const postId = this.props.postId;
+    let url =null;
+    if(change > 0) {
+       url = `/api/post/${postId}/like`;
+    }
+    else {
+       url = `/api/post/${postId}/dislike`;
+    }
+
+    const formData = `user=${Auth.getUserId()}`;
+
+    axios.post(url, formData, {
+      headers: { 
+        'Authorization': `bearer ${Auth.getToken()}`}
+    })
+    .then(response => {
+       
+      const newLikes = this.state.numLikes + change;
+      this.setState({numLikes: newLikes});
+      
+    })
+    .catch(function(error) {
+       console.log(error);
+    });
+
+
+    
   }
 
   render() {
-  	const { classes,name,title, subheader } = this.props;
+  	const { classes,name,title,subheader,postId,numLikes,numComments} = this.props;
 
   	return (
 	    
@@ -96,8 +123,10 @@ class PostCard extends React.Component {
         subheader={subheader} />
 
 	    <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-	      {this.props.imgUrl? <CardMedia
+	      {this.props.imgUrl? 
+         <CardMedia
             className={classes.media}
+            component="img"
             image={this.props.imgUrl}
             title="an image"
         />: '' }
@@ -106,7 +135,7 @@ class PostCard extends React.Component {
               This impressive paella is a perfect party dish and a fun meal to 
               cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like.
             </Typography>
-             </CardContent>
+         </CardContent>
         
           <PostActions 
             expandClick = {this.handleCommentExpandClick}
@@ -117,7 +146,7 @@ class PostCard extends React.Component {
        
         <Collapse in={this.state.comments} timeout="auto" unmountOnExit>
           <CardContent className={classes.commentBox}>
-            <CommentBox/>
+            <CommentBox postId={postId} type="comments"/>
           </CardContent>
         </Collapse>
       </Collapse>

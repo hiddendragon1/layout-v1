@@ -16,16 +16,16 @@ const styles = theme => ({
   },
 });
 
+
 class CommentList extends React.Component {
 
-
   render() {
-  	var commentList = this.props.data.map(function(comment) {
-  		return (
-			<Comment author={comment.author} key={comment.id}>
-				{comment.text}
-			</Comment>
-		);
+  	var commentList = this.props.data.map(function(comment,index) {
+		  return (
+  			<Comment author={comment.author.name} key={comment._id} replies={comment.replies} commentId={comment._id}>
+  				{comment.text}
+  			</Comment>
+		  );
   	});
 
 	return (

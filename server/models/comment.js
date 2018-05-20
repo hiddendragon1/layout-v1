@@ -5,7 +5,7 @@ const ReplySchema = new mongoose.Schema ({
     type: String,
     required: true
   },
-  author_id:{
+  author:{
     type: Schema.ObjectId,
     ref: 'User',
     required: true
@@ -23,12 +23,12 @@ const CommentSchema = new mongoose.Schema({
   	type: String,
   	required: true
   },
-  post_id:{
+  postId:{
     type: Schema.ObjectId,
     ref: 'Post',
     required: true
   },
-  author_id:{
+  author:{
     type: Schema.ObjectId,
     ref: 'User',
     required: true
@@ -41,3 +41,4 @@ const CommentSchema = new mongoose.Schema({
 },{timestamps: true});
 
 module.exports = mongoose.model('Comment', CommentSchema);
+module.exports = mongoose.model('Reply', ReplySchema);

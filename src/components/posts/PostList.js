@@ -16,7 +16,10 @@ class PostList extends React.Component {
 				subheader={post.createdAt}
 				title={post.title}
 				imgUrl={post.imgUrl}
-				key={post._id} 
+				key={post._id}
+				postId={post._id}
+				numLikes= {post.likes}
+				numComments= {post.comments}
 			/>
 		);
   	});

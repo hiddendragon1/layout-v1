@@ -17,7 +17,7 @@ mongoose.connection.once('open', function callback () {
 });
 
   require('./user');
-  require('./card');
   require('./comment');
   require('./post');
+  require('./classification');
 };

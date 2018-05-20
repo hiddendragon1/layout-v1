@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Reboot from 'material-ui/Reboot';
+import CssBaseline from 'material-ui/CssBaseline';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 
 import MainSideBar from './MainSideBar';
@@ -12,8 +12,8 @@ import axios from 'axios'
 class HomePage extends Component {
   constructor() {
      //third part packages
-     const Immutable = require('immutable');
-     const _ = require('lodash');
+     // const Immutable = require('immutable');
+     // const _ = require('lodash');
     super();
     this.state= {
       //dummy data
@@ -47,10 +47,6 @@ class HomePage extends Component {
   //fetch the Posts default by hot for Hompage
   componentWillMount() {
 
-    //set user name
-    this.author = {
-      name: Auth.getUserName()
-    }
     //get posts for display
     axios.get('/api/posts', {
       headers: { 
@@ -64,8 +60,8 @@ class HomePage extends Component {
           errors: {}
         });
 
-        console.log(response.data.Posts);
-        const temp = response.data.Posts;
+        console.log(response.data.posts);
+        const temp = response.data.posts;
 
         //set data to the temp
         this.setState({
@@ -95,19 +91,17 @@ class HomePage extends Component {
    */
   addNewPost(post) {
 
-    // const title = encodeURIComponent(post.title);
-    // const imgUrl = encodeURIComponent(post.imgUrl);
-    // const file = post.file;
-
     const formData = new FormData();
     formData.append("author", Auth.getUserId());
     formData.append("title", post.title);
-    // formData.append("imgUrl", imgUrl);
     formData.append("file", post.file);
     
-    // const formData = `author=${Auth.getUserId()}&title=${title}&imgUrl=${imgUrl}&file=${file}`;
+    //const formData = `author=${Auth.getUserId()}&title=${title}&imgUrl=${imgUrl}&file=${file}`;
 
-    console.log(formData);
+    //set user name
+    this.author = {
+      name: Auth.getUserName()
+    }
 
     axios.post('/api/post', formData, {
       headers: { 
@@ -122,7 +116,7 @@ class HomePage extends Component {
         });
         //set proper author name for display
         response.data.author = this.author;
-        this.state.data.push(response.data);
+        this.state.data.unshift(response.data);
         console.log(this.state.data);
         this.setState({
             data: this.state.data
@@ -152,7 +146,7 @@ class HomePage extends Component {
 
     return (
 	    <MainSideBar>
-	      <Reboot/>
+	      <CssBaseline />
         {welcome}
 	      <PostNew onAddNewPost = {this.addNewPost}/>
 	      <PostList data= {this.state.data}/>
